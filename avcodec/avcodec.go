@@ -278,6 +278,110 @@ func AvcodecDescriptorGetByName(n string) *Descriptor {
 	return (*Descriptor)(C.avcodec_descriptor_get_by_name(C.CString(n)))
 }
 
+func (f *Frame) Width() int32 {
+	return int32(f.width)
+}
+
+func (f *Frame) SetWidth(width int32) {
+	f.width = C.int(width)
+}
+
+func (f *Frame) Height() int32 {
+	return int32(f.height)
+}
+
+func (f *Frame) SetHeight(height int32) {
+	f.height = C.int(height)
+}
+
+func (f *Frame) KeyFrame() int32 {
+	return int32(f.key_frame)
+}
+
+func (f *Frame) SetKeyFrame(keyFrame int32) {
+	f.key_frame = C.int(keyFrame)
+}
+
 func (f *Frame) Pts() int64 {
 	return int64(f.pts)
+}
+
+func (f *Frame) SetPts(pts int64) {
+	f.pts = C.long(pts)
+}
+
+func (f *Frame) PktPts() int64 {
+	return int64(f.pkt_pts)
+}
+
+func (f *Frame) SetPktPts(pktPts int64) {
+	f.pkt_pts = C.long(pktPts)
+}
+
+func (f *Frame) PktDts() int64 {
+	return int64(f.pkt_dts)
+}
+
+func (f *Frame) SetPktDts(pktDts int64) {
+	f.pkt_dts = C.long(pktDts)
+}
+
+func (f *Frame) PktDuration() int64 {
+	return int64(f.pkt_duration)
+}
+
+func (f *Frame) SetPktDuration(pktDuration int64) {
+	f.pkt_duration = C.long(pktDuration)
+}
+
+func (f *Frame) DisplayPictureNumber() int32 {
+	return int32(f.display_picture_number)
+}
+
+func (f *Frame) SetDisplayPictureNumber(displayPictureNumber int32) {
+	f.display_picture_number = C.int(displayPictureNumber)
+}
+
+func (f *Frame) CodedPictureNumber() int32 {
+	return int32(f.coded_picture_number)
+}
+
+func (f *Frame) SetCodedPictureNumber(codedPictureNumber int32) {
+	f.coded_picture_number = C.int(codedPictureNumber)
+}
+
+func (f *Frame) BestEffortTimeStamp() int64 {
+	return int64(f.best_effort_timestamp)
+}
+
+func (f *Frame) SetBestEffortTimeStamp(bestEffortTimeStamp int64) {
+	f.best_effort_timestamp = C.long(bestEffortTimeStamp)
+}
+
+// (*frame).pkt_size
+func (f *Frame) PktPos() int64 {
+	return int64(f.pkt_pos)
+}
+
+func (f *Frame) SetPktPos(pktPos int64) {
+	f.pkt_pos = C.long(pktPos)
+}
+
+func (f *Frame) CopyFrameInfo(fOrig *Frame) {
+	f.SetKeyFrame(fOrig.KeyFrame())
+	f.SetPts(fOrig.Pts())
+	f.SetPktPts(fOrig.PktPts())
+	f.SetPktDts(fOrig.PktDts())
+	f.SetPktDuration(fOrig.PktDuration())
+	f.SetDisplayPictureNumber(fOrig.DisplayPictureNumber())
+	f.SetCodedPictureNumber(fOrig.CodedPictureNumber())
+	f.SetBestEffortTimeStamp(fOrig.BestEffortTimeStamp())
+}
+
+func (f *Frame) Format() PixelFormat {
+	return PixelFormat(f.format)
+}
+
+func (f *Frame) SetFormat(format PixelFormat) {
+	f.format = C.int(format)
 }

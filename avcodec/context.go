@@ -120,6 +120,15 @@ func (ctxt *Context) AvcodecEncodeVideo2(p *Packet, f *Frame, gp *int) int {
 	return int(C.avcodec_encode_video2((*C.struct_AVCodecContext)(ctxt), (*C.struct_AVPacket)(p), (*C.struct_AVFrame)(f), (*C.int)(unsafe.Pointer(gp))))
 }
 
+// FFmpeg3.0版本开始 avcodec_encode_video2 拆解成了两个函数 avcodec_send_frame 和 avcodec_receive_packet
+func (ctxt *Context) AvcodecSendFrame(f *Frame) int {
+	return int(C.avcodec_send_frame((*C.struct_AVCodecContext)(ctxt), (*C.struct_AVFrame)(f)))
+}
+
+func (ctxt *Context) AvcodecReceivePacket(p *Packet) int {
+	return int(C.avcodec_receive_packet((*C.struct_AVCodecContext)(ctxt), (*C.struct_AVPacket)(p)))
+}
+
 func (ctxt *Context) AvcodecEncodeSubtitle(b *uint8, bs int, s *AvSubtitle) int {
 	return int(C.avcodec_encode_subtitle((*C.struct_AVCodecContext)(ctxt), (*C.uint8_t)(b), C.int(bs), (*C.struct_AVSubtitle)(s)))
 }
