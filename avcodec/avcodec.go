@@ -61,16 +61,32 @@ func (cp *AvCodecParameters) AvCodecGetId() CodecId {
 	return *((*CodecId)(unsafe.Pointer(&cp.codec_id)))
 }
 
+func (cp *AvCodecParameters) AvCodecSetId(codecId CodecId) {
+	cp.codec_id = uint32(codecId)
+}
+
 func (cp *AvCodecParameters) AvCodecGetType() MediaType {
 	return *((*MediaType)(unsafe.Pointer(&cp.codec_type)))
+}
+
+func (cp *AvCodecParameters) AvCodecSetType(mediaType MediaType) {
+	cp.codec_type = int32(mediaType)
 }
 
 func (cp *AvCodecParameters) AvCodecGetWidth() int {
 	return (int)(*((*int32)(unsafe.Pointer(&cp.width))))
 }
 
+func (cp *AvCodecParameters) AvCodecSetWidth(width int) {
+	cp.width = C.int(width)
+}
+
 func (cp *AvCodecParameters) AvCodecGetHeight() int {
 	return (int)(*((*int32)(unsafe.Pointer(&cp.height))))
+}
+
+func (cp *AvCodecParameters) AvCodecSetHeight(height int) {
+	cp.height = C.int(height)
 }
 
 func (cp *AvCodecParameters) AvCodecGetChannels() int {
@@ -79,6 +95,28 @@ func (cp *AvCodecParameters) AvCodecGetChannels() int {
 
 func (cp *AvCodecParameters) AvCodecGetSampleRate() int {
 	return *((*int)(unsafe.Pointer(&cp.sample_rate)))
+}
+
+func (cp *AvCodecParameters) AvCodecGetBitRate() int64 {
+	return *((*int64)(unsafe.Pointer(&cp.bit_rate)))
+}
+
+func (cp *AvCodecParameters) AvCodecSetBitRate(bitRate int64) {
+	cp.bit_rate = C.long(bitRate)
+}
+
+// TODO:获取音频格式
+func (cp *AvCodecParameters) AvCodecGetFormat() PixelFormat {
+	return *((*PixelFormat)(unsafe.Pointer(&cp.format)))
+}
+
+// TODO:设置音频格式
+func (cp *AvCodecParameters) AvCodecSetFormat(format PixelFormat) {
+	cp.format = C.int(format)
+}
+
+func (cp *AvCodecParameters) AvCodecParametersCopy(src *AvCodecParameters) int {
+	return int(C.avcodec_parameters_copy((*C.struct_AVCodecParameters)(cp), (*C.struct_AVCodecParameters)(src)))
 }
 
 func (c *Codec) AvCodecGetMaxLowres() int {

@@ -23,6 +23,16 @@ type (
 	AvPictureType C.enum_AVPictureType
 	PixelFormat   C.enum_AVPixelFormat
 	File          C.FILE
+	AVRounding    C.enum_AVRounding
+)
+
+const (
+	AV_ROUND_ZERO        = int(C.AV_ROUND_ZERO)
+	AV_ROUND_INF         = int(C.AV_ROUND_INF)
+	AV_ROUND_DOWN        = int(C.AV_ROUND_DOWN)
+	AV_ROUND_UP          = int(C.AV_ROUND_UP)
+	AV_ROUND_NEAR_INF    = int(C.AV_ROUND_NEAR_INF)
+	AV_ROUND_PASS_MINMAX = int(C.AV_ROUND_PASS_MINMAX)
 )
 
 //Return the LIBAvUTIL_VERSION_INT constant.
@@ -69,4 +79,12 @@ func AvFopenUtf8(p, m string) *File {
 //Return the fractional representation of the internal time base.
 func AvGetTimeBaseQ() Rational {
 	return (Rational)(C.av_get_time_base_q())
+}
+
+func AvRescaleQRnd(a int64, bq Rational, cq Rational, rnd AVRounding) int64 {
+	return int64(C.av_rescale_q_rnd(C.long(a), C.struct_AVRational(bq), C.struct_AVRational(cq), uint32(rnd)))
+}
+
+func AvRescaleQ(a int64, bq Rational, cq Rational) int64 {
+	return int64(C.av_rescale_q(C.long(a), C.struct_AVRational(bq), C.struct_AVRational(cq)))
 }

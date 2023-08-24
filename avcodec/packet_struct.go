@@ -10,8 +10,11 @@ import "C"
 func (p *Packet) Buf() *AvBufferRef {
 	return (*AvBufferRef)(p.buf)
 }
-func (p *Packet) Duration() int {
-	return int(p.duration)
+func (p *Packet) Duration() int64 {
+	return int64(p.duration)
+}
+func (p *Packet) SetDuration(duration int64) {
+	p.duration = C.long(duration)
 }
 func (p *Packet) Flags() int {
 	return int(p.flags)
